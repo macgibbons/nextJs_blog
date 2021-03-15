@@ -1,0 +1,22 @@
+{
+    "extends": [
+        "wesbos"
+    ],
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "quotes": ["error", "double"],
+        "react/prop-types": 0,
+        "react/jsx-props-no-spreading": 0,
+        "prettier/prettier": [
+            "error",
+            {
+              "trailingComma": "es5",
+              "doubleQuote": true,
+              "printWidth": 120,
+              "tabWidth": 4
+            }
+          ]
+    }
+}
