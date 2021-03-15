@@ -1,27 +1,29 @@
-import Head from "next/head";
-import Link from "next/link";
-import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
-import Date from "../components/date";
+import Head from 'next/head'
+import Layout, { siteTitle } from '../components/layout'
+import utilStyles from '../styles/utils.module.css'
+import { getSortedPostsData } from '../lib/posts'
+import Link from 'next/link'
+import Date from '../components/date'
+import { GetStaticProps } from 'next'
 
-async function getCatFact() {
-    const res = await fetch("https://catfact.ninja/facts?limit=1&max_length=140");
-    return res.json();
+interface HomeProps {
+    allPostsData: {
+        date: string
+        title: string
+        id: string
+      }[], 
+      catData: {
+          data: [ {
+              fact: string,
+              length: string
+          }]
+      }
 }
 
-export async function getStaticProps() {
-    const catData = await getCatFact();
-    const allPostsData = getSortedPostsData();
-    return {
-        props: {
-            allPostsData,
-            catData,
-        },
-    };
-}
-
-export default function Home({ allPostsData, catData }) {
+export default function Home({
+    allPostsData, 
+    catData
+  }: HomeProps) {
     const catFact = catData.data[0];
     return (
         <Layout home>
@@ -60,3 +62,19 @@ export default function Home({ allPostsData, catData }) {
         </Layout>
     );
 }
+
+async function getCatFact() {
+    const res = await fetch("https://catfact.ninja/facts?limit=1&max_length=140");
+    return res.json();
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+    const catData = await getCatFact();
+    const allPostsData = getSortedPostsData()
+    return {
+      props: {
+        allPostsData,
+        catData,
+      }
+    }
+  }
