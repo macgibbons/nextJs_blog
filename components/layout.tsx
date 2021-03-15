@@ -4,10 +4,14 @@ import Image from "next/image";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 
+interface LayoutProps {
+    children: React.ReactNode,
+    home?: boolean
+}
 const name = "Mac";
 export const siteTitle = "Mac tries Next.js";
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, home }: LayoutProps) {
     return (
         <div className={styles.container}>
             <Head>
